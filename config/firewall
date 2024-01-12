@@ -1,0 +1,45 @@
+
+config 'defaults'
+	option 'syn_flood' '1'
+	option 'input' 'ACCEPT'
+	option 'output' 'ACCEPT'
+	option 'forward' 'REJECT'
+	option 'drop_invalid' '1'
+
+config 'include'
+	option 'path' '/etc/firewall.user'
+
+config 'zone'
+	option 'name' 'lan1'
+	option 'input' 'ACCEPT'
+	option 'output' 'ACCEPT'
+	option 'forward' 'ACCEPT'
+	option 'network' 'eth0_2'
+
+config 'zone'
+	option 'input' 'ACCEPT'
+	option 'output' 'ACCEPT'
+	option 'masq' '1'
+	option 'mtu_fix' '1'
+	option 'name' 'wwan'
+	option 'forward' 'REJECT'
+	option 'network' 'wwan'
+
+config 'forwarding'
+	option 'dest' 'lan1'
+	option 'src' 'wwan'
+
+config 'zone'
+	option 'input' 'ACCEPT'
+	option 'output' 'ACCEPT'
+	option 'name' 'lan0'
+	option 'network' 'eth0'
+	option 'forward' 'REJECT'
+
+config 'zone'
+	option 'name' 'wan'
+	option 'input' 'ACCEPT'
+	option 'forward' 'REJECT'
+	option 'output' 'ACCEPT'
+	option 'network' ' '
+

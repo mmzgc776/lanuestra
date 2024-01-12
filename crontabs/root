@@ -1,0 +1,1 @@
+*/10 * * * * /usr/bin/php-cgi /www/lannuestra/php/check.php

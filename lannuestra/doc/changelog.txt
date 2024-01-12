@@ -1,0 +1,27 @@
+ACTUALIZACION(20-02-13): Ayer cambié nuestro proovedor de servicio, ahora tenemos una conexión un poco más rapida, estoy aun haciendo pruebas sobre balanceo de carga, disculpen las molestias.
+
+ACTUALIZACION(06-02-13): Hoy agregué una script para eliminar usuarios inactivos, los usuarios que no hayan usado la red en los ultimos 3 meses serán borrados,	tambien preparé la interfaz de cambio de contraseña.
+
+ACTUALIZACION(30-01-13): Han pasado más o menos dos o tres meses desde que comenzé a brindar este servicio, hace poco llegó el recibo nuevo de la luz... Si, para mi pesar, ha incrementado considerablemente mi consumo de energia, a partir de mañana apagaré la red por las noches hasta que separe el circuito destinado a la red.
+
+ACTUALIZACION(26-01-13): Corregido un bug que permitía registrar un usuario varias veces, y la lista de usuarios ahora está en SQL en ves de CSV :D.
+
+ACTUALIZACION(23-01-13): Hace 2 o 3 dias migré todo el proyecto al access-point. Cualquier observación o detalle nuevo del funcionamiento me sería de mucha utilidad.
+
+ACTUALIZACION(12-01-13): Hoy despues de dos o tres bricks (flasheos malos), he cambiado la firma del access point de la oficial del fabricante a OpenWRT, con esto espero poder migrar el sistema al AP y eliminar el servidor intermediario, me gustaría recibir cualquier comentario si la red tiene algún cambio considerable o detalle que altere el funcionamiento normal.
+
+ACTUALIZACION(31-12-12): He realizado correciones mayores en algunas scripts, se han separado las funciones para hacerlas más generales, se le agregó a la ventana de estado datos sobre la conección, velocidad, y cantidad de datos transferidos; También modifiqué una script de la pagina que daba una carita triste en los aparatos Apple, está aun en pruebas esta parte.
+
+ACTUALIZACION(08-12-12): Preparé la estructura de la pagina de estado, proximamente estará funcional.
+
+ACTUALIZACION(25-10-12): Hoy he encontrado un problema con la forma en la que se desconecta a los usuarios, las personas que usen Windows 7, Vista o tengan instalado algún firewall estricto en sus equipos tendrán problemas por autodesconeccion pueden solucionarlo desactivando temporalmente el firewall o permitiendo el trafico del protocolo ICMP.		
+Estaré trabajando para arreglarlo.
+								
+ACTUALIZACION(1-11-12): Hoy he modificado la forma en la que los usuarios se dan de baja, espero que esta modificación arregle la autodesconección por "ping" fallido, ahora se usa la tabla de vecinos del servidor(ARP).
+
+ACTUALIZACION(03-11-12): Después de un sin fin de pruebas y reinicios del servidor (perdón por las molestias), he hecho correcciones en la script de desconección. Espero que con esto quede estable y funcional esta parte del proyecto.
+										
+ACTUALIZACION(16-11-12): Hoy he ampliado el ancho de banda (tasa de transferencia) asignado para la red de 86kbps a 128kbps cuando consiga un mejor proovedor la haremos aun más rapida.
+
+ACTUALIZACION(21-11-12): Hoy he agregado una clase raiz a la jerarquia del control de trafico, ahora todos los usuarios pueden robar(borrow) ancho de banda de los demas cuando la red no tiene carga, esto significa que se podrá aprovechar mejor el ancho de banda y por ende navegarán más rapido.
+						

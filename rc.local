@@ -1,0 +1,44 @@
+# Put your custom commands here that should be executed once
+# the system init finished. By default this file does nothing.
+
+#Restaura las reglas de iptables
+<<<COMMENT1
+iptables -I INPUT -i wlan0 -p udp -m udp --dport 67 -j ACCEPT 
+iptables -I INPUT -i wlan0 -p tcp -m tcp --dport 67 -j ACCEPT 
+iptables -I INPUT -i wlan0 -p udp -m udp --dport 53 -j ACCEPT 
+iptables -I INPUT -i wlan0 -p tcp -m tcp --dport 53 -j ACCEPT 
+iptables -I FORWARD -i wlan0 -j REJECT --reject-with icmp-port-unreachable 
+iptables -I FORWARD -o wlan0 -j REJECT --reject-with icmp-port-unreachable 
+iptables -I FORWARD -i wlan0 -o wlan0 -j ACCEPT 
+iptables -I FORWARD -d 10.42.43.0/24 -o wlan0 -m state --state RELATED,ESTABLISHED -j ACCEPT 
+iptables -I FORWARD -p icmp -j ACCEPT
+iptables -t nat -I PREROUTING -i wlan0 -p tcp -m tcp --dport 80 -j DNAT --to-destination 10.42.43.254:80
+iptables -t nat -I POSTROUTING -s 10.42.43.0/24 ! -d 192.168.10.0/24 -j MASQUERADE
+#Creamos las disciplinas y colas
+insmod sch_htb
+insmod cls_fw
+tc qdisc add dev eth0 root handle 1: htb default 400
+tc qdisc add dev wlan0 root handle 1: htb default 300
+tc class add dev eth0 parent 1: classid 1:255 htb rate 256kbps
+tc class add dev wlan0 parent 1: classid 1:255 htb rate 48kbps
+#Marcas para iptables
+#Filtros y clases de subida
+#Filtros y clases de bajada
+for a in `seq 1 253`
+	do 
+                iptables -t mangle -A POSTROUTING -s 10.42.43.$a ! -p ICMP -j MARK --set-mark $a
+		iptables -t mangle -A POSTROUTING -d 10.42.43.$a ! -p ICMP -j MARK --set-mark $a
+		tc class add dev eth0 parent 1:255 classid 1:$a htb rate 50kbps ceil 100kbps
+		tc filter add dev eth0 parent 1: protocol ip handle $a fw flowid 1:$a
+		tc class add dev wlan0 parent 1:255 classid 1:$a htb rate 50kbps ceil 100kbps
+		tc filter add dev wlan0 parent 1: protocol ip handle $a fw flowid 1:$a
+	done
+#Reglas para el kinder
+iptables -I INPUT -i wlan0-1 -p udp -m udp --dport 67 -j ACCEPT 
+iptables -I INPUT -i wlan0-1 -p tcp -m tcp --dport 67 -j ACCEPT 
+iptables -I INPUT -i wlan0-1 -p udp -m udp --dport 53 -j ACCEPT 
+iptables -I INPUT -i wlan0-1 -p tcp -m tcp --dport 53 -j ACCEPT 
+iptables -I FORWARD -i wlan0-1 -j ACCEPT
+iptables -I FORWARD -o wlan0-1 -j ACCEPT
+COMMENT1
+exit 0

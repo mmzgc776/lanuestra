@@ -1,0 +1,4 @@
+iptables -,FORWARD -d, -o wlan0 -m state --state ESTABLISHED -j ACCEPT
+iptables -,FORWARD -d, -o wlan0 -m state --state RELATED -j ACCEPT
+iptables -,FORWARD -s, -i wlan0 -j ACCEPT
+iptables -t nat -, PREROUTING -s, -p tcp --dport 80 -j ACCEPT
